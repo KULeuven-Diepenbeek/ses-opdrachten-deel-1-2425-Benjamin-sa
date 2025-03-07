@@ -1,11 +1,11 @@
-#TODO
-# TODO
 MAINCLASS = App
 JAR = app.jar
 
+.PHONY: compile clean run jar
+
 compile:
 	@echo "compiling ..."
-	javac -d ./build *.java
+	javac -d ./build *.java model/*.java
 	@echo "Done compiling."
 
 clean:
@@ -13,12 +13,12 @@ clean:
 	-rm -R ./build/*
 	@echo "Done cleaning."
 
-run: 
+run: compile jar
 	@echo "running program $(JAR) ...\n---------------"
 	@cd ./build && java -cp "$(JAR)" $(MAINCLASS)
 	@echo "---------------\nProgram exited."
 
-jar:
+jar: compile
 	@echo "Packaging to jar ..."
 	cd ./build && jar cvfe $(JAR) $(MAINCLASS) *
 	@echo "Done packaging."
